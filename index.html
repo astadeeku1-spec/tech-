@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -456,17 +456,18 @@
       container.innerHTML = "";
 
       infoData.forEach((item, index) => {
+        if (!item.image || item.image.trim() === "") return; // Skip if no data
+
         const card = document.createElement('div');
         card.className = 'card';
         card.style.animationDelay = `${index * 0.1}s`;
         card.innerHTML = `
             <div style="overflow: hidden;">
-                <img src="${item.image}" alt="Tech Image">
+                <img src="${item.image}" alt="Tech Image" onerror="this.closest('.card').remove()">
             </div>
             <div class="card-content">
                 <h3>${item.title}</h3>
                 <p>${item.description}</p>
-                <a href="${item.url}" class="btn-read">Read More</a>
             </div>
         `;
         container.appendChild(card);
