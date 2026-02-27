@@ -647,17 +647,23 @@
 
     async function fetchNews() {
       try {
-        const response = await fetch("http://localhost:3000/api/news");
+        // Try local API first
+        let response = await fetch("http://localhost:3000/api/news");
+
+        // If local API fails (e.g. for global visitors), fallback to the static file
+        if (!response.ok) throw new Error('Local server offline');
+
         const data = await response.json();
-        if (data && data.length > 0) {
+        renderInfo(data && data.length > 0 ? data : infoData);
+      } catch (error) {
+        console.log("Global mode: Fetching static news.json");
+        try {
+          const response = await fetch("news.json");
+          const data = await response.json();
           renderInfo(data);
-        } else {
+        } catch (staterr) {
           renderInfo(infoData);
         }
-      } catch (error) {
-        console.error("Error fetching news:", error);
-        // Fallback to static data if fetch fails
-        renderInfo(infoData);
       }
     }
 
@@ -722,7 +728,7 @@
             statusMsg.classList.add('success');
           } else {
             statusText += `GitHub Sync: ${result.github}. (Check .env token)`;
-            statusMsg.classList.add('success'); // Still success because local storage worked
+            statusMsg.classList.add('success');
           }
           statusMsg.innerText = statusText;
           feedbackForm.reset();
@@ -730,9 +736,21 @@
           throw new Error(result.error || 'Failed to transmit feedback');
         }
       } catch (error) {
-        console.error('Feedback error:', error);
-        statusMsg.innerText = 'Transmission error: ' + error.message;
+        console.warn('Local server offline, offering Global Submission via GitHub Issues');
+
+        // Prepare GitHub Issue URL for global users
+        const issueTitle = encodeURIComponent(`Feedback from ${name}`);
+        const issueBody = encodeURIComponent(`**Name:** ${name}\n**Email:** ${email}\n**Timestamp:** ${new Date().toISOString()}\n\n**Feedback:**\n${message}`);
+        const githubIssueUrl = `https://github.com/astadeeku1-spec/tech-/issues/new?title=${issueTitle}&body=${issueBody}`;
+
+        statusMsg.innerHTML = `
+          <div style="margin-bottom: 10px;">Local transmission failed (Server Offline).</div>
+          <a href="${githubIssueUrl}" target="_blank" class="btn-live" style="background: #238636; border: none; width: 100%; display: inline-flex; justify-content: center;">
+            🚀 Complete Global Submission via GitHub
+          </a>
+        `;
         statusMsg.classList.add('error');
+        statusMsg.style.display = 'block';
       } finally {
         submitBtn.disabled = false;
         submitBtn.querySelector('span').innerText = 'Deploy Feedback';
