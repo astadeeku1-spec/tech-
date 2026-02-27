@@ -694,7 +694,6 @@
 
     /* Feedback Handling Configuration */
     const LOCAL_API = "http://localhost:3000/api/feedback";
-    // Connected to your live Vercel backend
     const GLOBAL_API = "https://tech-murex-one.vercel.app/api/feedback";
 
     const feedbackForm = document.getElementById('feedbackForm');
@@ -728,7 +727,7 @@
         const result = await response.json();
 
         if (response.ok) {
-          statusMsg.innerText = `Success! Feedback ${isLocal ? 'stored in Local DB and' : ''} synced to your GitHub Repository! 🛸`;
+          statusMsg.innerText = `Success! Feedback synced to your GitHub Repository! 🛸`;
           statusMsg.classList.add('success');
           feedbackForm.reset();
         } else {
@@ -738,8 +737,8 @@
         console.error('Submission error:', error);
         if (!isLocal) {
           statusMsg.innerHTML = `
-            <div style="font-weight: 700; margin-bottom: 5px;">Offline Transmission Active.</div>
-            <div>To enable global storage without GitHub accounts, your backend must be hosted on Render.</div>
+            <div style="font-weight: 700; margin-bottom: 5px;">Global Transmission Pending.</div>
+            <div>Please ensure your Vercel project has the GITHUB_TOKEN environment variable set.</div>
           `;
         } else {
           statusMsg.innerText = 'Local transmission error: ' + error.message;
