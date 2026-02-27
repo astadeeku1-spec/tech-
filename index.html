@@ -245,6 +245,165 @@
     .card {
       animation: fadeIn 0.6s ease-out forwards;
     }
+
+    /* Feedback Section Styles */
+    #feedback {
+      background: var(--card-bg);
+      border-radius: 24px;
+      padding: 4rem;
+      margin-top: 5rem;
+      margin-bottom: 5rem;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(100, 255, 218, 0.1);
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #feedback::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -10%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(100, 255, 218, 0.05) 0%, transparent 70%);
+      z-index: 0;
+    }
+
+    .feedback-header h2 {
+      font-size: 2.5rem;
+      margin: 0 0 1rem 0;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 800;
+    }
+
+    .feedback-form {
+      display: grid;
+      gap: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .input-group label {
+      font-weight: 600;
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    .feedback-form input,
+    .feedback-form textarea {
+      background: rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      padding: 1rem;
+      border-radius: 12px;
+      color: var(--text-color);
+      font-family: inherit;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .dark .feedback-form input,
+    .dark .feedback-form textarea {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .feedback-form input:focus,
+    .feedback-form textarea:focus {
+      outline: none;
+      border-color: var(--accent-color);
+      background: rgba(100, 255, 218, 0.05);
+      box-shadow: 0 0 15px rgba(100, 255, 218, 0.1);
+    }
+
+    .btn-submit {
+      background: var(--primary-gradient);
+      color: #020617;
+      border: none;
+      padding: 1.2rem;
+      border-radius: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      box-shadow: 0 10px 25px rgba(56, 189, 248, 0.3);
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(56, 189, 248, 0.5);
+    }
+
+    .btn-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .status-msg {
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 8px;
+      display: none;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .status-msg.success {
+      display: block;
+      background: rgba(34, 197, 94, 0.1);
+      color: #22c55e;
+      border: 1px solid rgba(34, 197, 94, 0.2);
+    }
+
+    .status-msg.error {
+      display: block;
+      background: rgba(239, 68, 68, 0.1);
+      color: #ef4444;
+      border: 1px solid rgba(239, 68, 68, 0.2);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .btn-live {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      text-decoration: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-live:hover {
+      background: var(--accent-color);
+      color: #020617;
+      border-color: var(--accent-color);
+      transform: translateY(-2px);
+    }
   </style>
 </head>
 
@@ -315,7 +474,11 @@
   <header>
     <nav>
       <h2>TECH TRENDS</h2>
-      <div>
+      <div class="nav-links">
+        <a href="https://astadeeku1-spec.github.io/tech-/" class="btn-live" target="_blank">
+          <span>Live Site</span>
+          <span>🌐</span>
+        </a>
         <button class="theme-toggle" onclick="toggleDark()" id="themeBtn">🌙</button>
       </div>
     </nav>
@@ -331,10 +494,41 @@
         <div class="loader">Curating the future...</div>
       </div>
     </section>
+
+    <section id="feedback-space">
+      <div id="feedback">
+        <div class="feedback-header">
+          <h2>Shape the Future</h2>
+          <p>Your feedback helps us curate a better tomorrow. Share your thoughts on the latest tech trends.</p>
+        </div>
+        <form class="feedback-form" id="feedbackForm">
+          <div class="input-group">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" placeholder="John Doe" required>
+          </div>
+          <div class="input-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="john@example.com" required>
+          </div>
+          <div class="input-group">
+            <label for="message">Feedback</label>
+            <textarea id="message" rows="5" placeholder="What's on your mind?" required></textarea>
+          </div>
+          <button type="submit" class="btn-submit" id="submitBtn">
+            <span>Deploy Feedback</span>
+            <span>🚀</span>
+          </button>
+          <div id="statusMsg" class="status-msg"></div>
+        </form>
+      </div>
+    </section>
   </main>
 
   <footer>
-    <p>© 2026 Daily Tech Trends | Engineered for the Future</p>
+    <p>© 2026 <a href="https://astadeeku1-spec.github.io/tech-/"
+        style="color: inherit; text-decoration: none; font-weight: 700;">Daily Tech Trends</a> | Engineered by <a
+        href="https://github.com/astadeeku1-spec" style="color: var(--accent-color); text-decoration: none;"
+        target="_blank">@astadeeku1-spec</a></p>
   </footer>
 
   <script>
@@ -343,7 +537,9 @@
       initTheme();
       updateTime();
       setInterval(updateTime, 1000);
-      renderInfo();
+
+      // Fetch news from backend
+      fetchNews();
 
       // Handle Splash Screen
       setTimeout(() => {
@@ -449,13 +645,29 @@
       }
     ];
 
-    function renderInfo() {
+    async function fetchNews() {
+      try {
+        const response = await fetch("http://localhost:3000/api/news");
+        const data = await response.json();
+        if (data && data.length > 0) {
+          renderInfo(data);
+        } else {
+          renderInfo(infoData);
+        }
+      } catch (error) {
+        console.error("Error fetching news:", error);
+        // Fallback to static data if fetch fails
+        renderInfo(infoData);
+      }
+    }
+
+    function renderInfo(data = infoData) {
       const container = document.getElementById("newsContainer");
       if (!container) return;
 
       container.innerHTML = "";
 
-      infoData.forEach((item, index) => {
+      data.forEach((item, index) => {
         if (!item.image || item.image.trim() === "") return; // Skip if no data
 
         const card = document.createElement('div');
@@ -473,6 +685,59 @@
         container.appendChild(card);
       });
     }
+
+    /* Feedback Handling */
+    const feedbackForm = document.getElementById('feedbackForm');
+    const statusMsg = document.getElementById('statusMsg');
+    const submitBtn = document.getElementById('submitBtn');
+
+    feedbackForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const message = document.getElementById('message').value;
+
+      // Reset status
+      statusMsg.className = 'status-msg';
+      statusMsg.innerText = '';
+      submitBtn.disabled = true;
+      submitBtn.querySelector('span').innerText = 'Transmitting...';
+
+      try {
+        const response = await fetch('http://localhost:3000/api/feedback', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ name, email, message, timestamp: new Date().toISOString() })
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          let statusText = `Feedback localized: ${result.local}. `;
+          if (result.github === 'Success') {
+            statusText += 'Successfully synced to GitHub! 🛸';
+            statusMsg.classList.add('success');
+          } else {
+            statusText += `GitHub Sync: ${result.github}. (Check .env token)`;
+            statusMsg.classList.add('success'); // Still success because local storage worked
+          }
+          statusMsg.innerText = statusText;
+          feedbackForm.reset();
+        } else {
+          throw new Error(result.error || 'Failed to transmit feedback');
+        }
+      } catch (error) {
+        console.error('Feedback error:', error);
+        statusMsg.innerText = 'Transmission error: ' + error.message;
+        statusMsg.classList.add('error');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.querySelector('span').innerText = 'Deploy Feedback';
+      }
+    });
   </script>
 
 </body>
