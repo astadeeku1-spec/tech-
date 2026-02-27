@@ -692,7 +692,11 @@
       });
     }
 
-    /* Feedback Handling */
+    /* Feedback Handling Configuration */
+    const LOCAL_API = "http://localhost:3000/api/feedback";
+    // Replace the URL below with your Render.com URL after hosting
+    const GLOBAL_API = "https://your-app-name.onrender.com/api/feedback";
+
     const feedbackForm = document.getElementById('feedbackForm');
     const statusMsg = document.getElementById('statusMsg');
     const submitBtn = document.getElementById('submitBtn');
@@ -710,47 +714,37 @@
       submitBtn.disabled = true;
       submitBtn.querySelector('span').innerText = 'Transmitting...';
 
+      // Check if running on localhost or global site
+      const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+      const apiUrl = isLocal ? LOCAL_API : GLOBAL_API;
+
       try {
-        const response = await fetch('http://localhost:3000/api/feedback', {
+        const response = await fetch(apiUrl, {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ name, email, message, timestamp: new Date().toISOString() })
         });
 
         const result = await response.json();
 
         if (response.ok) {
-          let statusText = `Feedback localized: ${result.local}. `;
-          if (result.github === 'Success') {
-            statusText += 'Successfully synced to GitHub! 🛸';
-            statusMsg.classList.add('success');
-          } else {
-            statusText += `GitHub Sync: ${result.github}. (Check .env token)`;
-            statusMsg.classList.add('success');
-          }
-          statusMsg.innerText = statusText;
+          statusMsg.innerText = `Success! Feedback ${isLocal ? 'stored in Local DB and' : ''} synced to your GitHub Repository! 🛸`;
+          statusMsg.classList.add('success');
           feedbackForm.reset();
         } else {
-          throw new Error(result.error || 'Failed to transmit feedback');
+          throw new Error(result.error || 'Server error');
         }
       } catch (error) {
-        console.warn('Local server offline, offering Global Submission via GitHub Issues');
-
-        // Prepare GitHub Issue URL for global users
-        const issueTitle = encodeURIComponent(`Feedback from ${name}`);
-        const issueBody = encodeURIComponent(`**Name:** ${name}\n**Email:** ${email}\n**Timestamp:** ${new Date().toISOString()}\n\n**Feedback:**\n${message}`);
-        const githubIssueUrl = `https://github.com/astadeeku1-spec/tech-/issues/new?title=${issueTitle}&body=${issueBody}`;
-
-        statusMsg.innerHTML = `
-          <div style="margin-bottom: 10px;">Local transmission failed (Server Offline).</div>
-          <a href="${githubIssueUrl}" target="_blank" class="btn-live" style="background: #238636; border: none; width: 100%; display: inline-flex; justify-content: center;">
-            🚀 Complete Global Submission via GitHub
-          </a>
-        `;
+        console.error('Submission error:', error);
+        if (!isLocal) {
+          statusMsg.innerHTML = `
+            <div style="font-weight: 700; margin-bottom: 5px;">Offline Transmission Active.</div>
+            <div>To enable global storage without GitHub accounts, your backend must be hosted on Render.</div>
+          `;
+        } else {
+          statusMsg.innerText = 'Local transmission error: ' + error.message;
+        }
         statusMsg.classList.add('error');
-        statusMsg.style.display = 'block';
       } finally {
         submitBtn.disabled = false;
         submitBtn.querySelector('span').innerText = 'Deploy Feedback';
