@@ -1,0 +1,2 @@
+❌ MongoDB connection error: authentication failed, correlationID = 189a49009e3bf9455747f1d7
+❌ Database initialization error: authentication failed, correlationID = 189a49009e3bf9455747f1d7
