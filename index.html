@@ -648,7 +648,11 @@
     async function fetchNews() {
       try {
         // Try local API first
+
         let response = await fetch("https://tech-a5k5.onrender.com/api/feedback";
+
+        let response = await fetch("http://localhost:3000/api/news");
+
 
         // If local API fails (e.g. for global visitors), fallback to the static file
         if (!response.ok) throw new Error('Local server offline');
@@ -694,7 +698,11 @@
 
     /* Feedback Handling Configuration */
     const LOCAL_API = "http://localhost:3000/api/feedback";
+
     const GLOBAL_API = "https://tech-a5k5.onrender.com/api/feedback";
+
+    const GLOBAL_API = "https://tech-murex-one.vercel.app/api/feedback";
+
 
     const feedbackForm = document.getElementById('feedbackForm');
     const statusMsg = document.getElementById('statusMsg');
