@@ -646,15 +646,13 @@
     ];
 
     async function fetchNews() {
+      const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+      const newsApiUrl = isLocal ? "http://localhost:3000/api/news" : "https://tech-a5k5.onrender.com/api/news";
+
       try {
-        // Try local API first
+        let response = await fetch(newsApiUrl);
 
-        let response = await fetch("https://tech-a5k5.onrender.com/api/feedback";
-
-        let response = await fetch("http://localhost:3000/api/news");
-
-
-        // If local API fails (e.g. for global visitors), fallback to the static file
+        // If API fails, fallback to the static file
         if (!response.ok) throw new Error('Local server offline');
 
         const data = await response.json();
@@ -698,10 +696,7 @@
 
     /* Feedback Handling Configuration */
     const LOCAL_API = "http://localhost:3000/api/feedback";
-
     const GLOBAL_API = "https://tech-a5k5.onrender.com/api/feedback";
-
-    const GLOBAL_API = "https://tech-murex-one.vercel.app/api/feedback";
 
 
     const feedbackForm = document.getElementById('feedbackForm');
@@ -746,7 +741,7 @@
         if (!isLocal) {
           statusMsg.innerHTML = `
             <div style="font-weight: 700; margin-bottom: 5px;">Global Transmission Pending.</div>
-            <div>Please ensure your Vercel project has the GITHUB_TOKEN environment variable set.</div>
+            <div>Please ensure your Render Web Service has the GITHUB_TOKEN and MONGO_URI environment variables set.</div>
           `;
         } else {
           statusMsg.innerText = 'Local transmission error: ' + error.message;
