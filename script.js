@@ -72,11 +72,62 @@ function renderInfo(data) {
   });
 }
 
+
+const LOCAL_API = "http://localhost:3000/api/feedback";
+const GLOBAL_API = "https://tech-a5k5.onrender.com/api/feedback";
+
 document.getElementById('feedbackForm')?.addEventListener('submit', async (e) => {
   e.preventDefault();
+
+  const name = document.getElementById('name').value;
+  const email = document.getElementById('email').value;
+  const message = document.getElementById('message').value;
+
   const statusMsg = document.getElementById('statusMsg');
-  statusMsg.className = 'status-msg success';
+  const submitBtn = document.getElementById('submitBtn');
+
+  // Reset status
+  statusMsg.className = 'status-msg';
   statusMsg.style.display = 'block';
-  statusMsg.innerText = 'Success! Feedback synced to your GitHub Repository! 🛸';
-  e.target.reset();
+  statusMsg.innerText = '';
+  submitBtn.disabled = true;
+  submitBtn.querySelector('span').innerText = 'Transmitting...';
+
+  // Check if running locally or globally
+  const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  // Point straight to Render Deployment!
+  const apiUrl = isLocal ? LOCAL_API : GLOBAL_API;
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, message, timestamp: new Date().toISOString() })
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      statusMsg.innerText = `Success! Feedback synced via Render Deployment! 🛸`;
+      statusMsg.classList.add('success');
+      e.target.reset();
+    } else {
+      throw new Error(result.error || 'Server error');
+    }
+  } catch (error) {
+    console.error('Submission error:', error);
+    if (!isLocal) {
+      statusMsg.innerHTML = `
+        <div style="font-weight: 700; margin-bottom: 5px;">Global Transmission Pending.</div>
+        <div>Please ensure your Render Web Service has the GITHUB_TOKEN and MONGO_URI environment variables set.</div>
+      `;
+    } else {
+      statusMsg.innerText = 'Local transmission error: ' + error.message;
+    }
+    statusMsg.classList.add('error');
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.querySelector('span').innerText = 'Deploy Feedback';
+  }
 });
+
