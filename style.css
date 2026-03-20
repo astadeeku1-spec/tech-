@@ -3,8 +3,8 @@
   --text-color: #080101;
   --header-bg: #e6e9ed;
   --card-bg: white;
-  --accent-color: #64ffda;
-  --primary-gradient: linear-gradient(135deg, #64ffda 0%, #38bdf8 100%);
+  --accent-color: #cadbd7;
+  --primary-gradient: linear-gradient(135deg, #d4a5c7 0%, #cc8599 100%);
 }
 
 body.dark {
