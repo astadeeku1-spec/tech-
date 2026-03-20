@@ -50,37 +50,17 @@ nav {
 */
 nav h2 {
   margin: 0;
+  opacity: 0;
+  animation: revealNavText 0.5s ease 4.5s forwards;
   font-weight: 900;
   font-size: 1.8rem;
   color: white;
   letter-spacing: -1px;
   display: inline-block;
   transform-origin: right center;
-  animation: settleRight 5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
 }
 
-@keyframes settleRight {
-  0% {
-    transform: translate(-27vw, 40vh) scale(3.5);
-    opacity: 0;
-  }
 
-  30% {
-    transform: translate(-27vw, 40vh) scale(4);
-    opacity: 1;
-  }
-
-  60% {
-    transform: translate(-27vw, 40vh) scale(3.5);
-    opacity: 1;
-  }
-
-  100% {
-    transform: translate(0, 0) scale(1);
-    opacity: 1;
-    filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.5));
-  }
-}
 
 section {
   padding: 2rem 1rem;
@@ -207,8 +187,6 @@ section {
   font-size: 2.5rem;
   margin: 0 0 1rem 0;
   color: white;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   font-weight: 800;
 }
 
@@ -365,4 +343,59 @@ header {
   }
 
   /* Fade back into your pinkish theme */
+}
+
+/* The perfectly centered splash title */
+#splash-title {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin: 0;
+  font-weight: 900;
+  font-size: 1.8rem;
+  color: white;
+  letter-spacing: -1px;
+  z-index: 10000;
+  transform: translate(-50%, -50%) scale(3.5);
+  animation: perfectCenterSplash 5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  pointer-events: none;
+}
+
+@keyframes perfectCenterSplash {
+  0% {
+    transform: translate(-50%, -50%) scale(3.5);
+    opacity: 0;
+  }
+
+  30% {
+    transform: translate(-50%, -50%) scale(4);
+    opacity: 1;
+  }
+
+  60% {
+    transform: translate(-50%, -50%) scale(3.5);
+    opacity: 1;
+  }
+
+  90% {
+    transform: translate(30vw, -45vh) scale(1);
+    opacity: 0;
+  }
+
+  /* Flies off to the right corner! */
+  100% {
+    transform: translate(30vw, -45vh) scale(1);
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@keyframes revealNavText {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
