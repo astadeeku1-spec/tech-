@@ -1,7 +1,7 @@
 :root {
   --bg-color: #ea648c;
   --text-color: #080101;
-  --header-bg: #e6e9ed;
+  --header-bg: hsl(332, 100%, 81%);
   --card-bg: white;
   --accent-color: #cadbd7;
   --primary-gradient: linear-gradient(135deg, #d4a5c7 0%, #cc8599 100%);
@@ -61,17 +61,17 @@ nav h2 {
 
 @keyframes settleRight {
   0% {
-    transform: translate(-20vw, 40vh) scale(3.5);
+    transform: translate(-25vw, 40vh) scale(3.5);
     opacity: 0;
   }
 
   30% {
-    transform: translate(-20vw, 40vh) scale(4);
+    transform: translate(-25vw, 40vh) scale(4);
     opacity: 1;
   }
 
   60% {
-    transform: translate(-20vw, 40vh) scale(3.5);
+    transform: translate(-25vw, 40vh) scale(3.5);
     opacity: 1;
   }
 
@@ -206,7 +206,7 @@ section {
 .feedback-header h2 {
   font-size: 2.5rem;
   margin: 0 0 1rem 0;
-  background: var(--primary-gradient);
+  color: white;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-weight: 800;
