@@ -62,7 +62,8 @@
       -webkit-text-fill-color: transparent;
       background-clip: text;
       letter-spacing: -1px;
-      animation: zoomPulse 4s ease-in-out infinite;
+      opacity: 0;
+      animation: revealNavText 0.5s ease 4.5s forwards;
       display: inline-block;
     }
 
@@ -410,66 +411,70 @@
 <body>
 
   <style>
-    /* Splash Screen Styles */
-    #splash-screen {
+    /* --- Epic Black Screen Reveal Animation --- */
+    body::before {
+      content: "";
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
-      background: var(--header-bg);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      transition: opacity 0.8s ease, visibility 0.8s;
+      width: 100vw;
+      height: 100vh;
+      background-color: black;
+      z-index: 900;
+      animation: fadeOverlay 5s forwards;
+      pointer-events: none;
     }
 
-    #splash-screen.fade-out {
-      opacity: 0;
-      visibility: hidden;
+    header {
+      animation: fadeHeader 5s forwards;
     }
 
-    .splash-content {
-      text-align: center;
-      animation: zoomPulse 2.5s ease-in-out infinite;
+    @keyframes fadeOverlay {
+      0% { opacity: 1; }
+      80% { opacity: 1; }
+      100% { opacity: 0; visibility: hidden; }
     }
 
-    .splash-content h1 {
-      font-size: 4rem;
+    @keyframes fadeHeader {
+      0% { background-color: rgb(40, 10, 10); box-shadow: none; }
+      80% { background-color: black; box-shadow: none; }
+      100% { background-color: var(--header-bg); }
+    }
+
+    /* The perfectly centered zooming splash title */
+    #splash-title {
+      position: fixed;
+      top: 50%;
+      left: 50%;
       margin: 0;
+      font-weight: 900;
+      font-size: 1.8rem;
+      letter-spacing: -1px;
+      z-index: 10000;
       background: var(--primary-gradient);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      font-weight: 900;
-      letter-spacing: -2px;
+      transform: translate(-50%, -50%) scale(3.5);
+      animation: perfectCenterSplash 5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+      pointer-events: none;
     }
 
-    @keyframes zoomPulse {
-      0% {
-        transform: scale(0.8);
-        opacity: 0.5;
-      }
+    @keyframes perfectCenterSplash {
+      0% { transform: translate(-50%, -50%) scale(2); opacity: 0; }
+      30% { transform: translate(-50%, -50%) scale(3.5); opacity: 1; filter: drop-shadow(0 0 10px #f838a2); }
+      60% { transform: translate(-50%, -50%) scale(3.5); opacity: 1; filter: drop-shadow(0 0 10px #f838a2); }
+      90% { transform: translate(-45vw, -45vh) scale(1); opacity: 0; } /* Flies to the upper LEFT corner! */
+      100% { transform: translate(-45vw, -45vh) scale(1); opacity: 0; visibility: hidden; }
+    }
 
-      50% {
-        transform: scale(1.2);
-        opacity: 1;
-      }
-
-      100% {
-        transform: scale(0.8);
-        opacity: 0.5;
-      }
+    @keyframes revealNavText {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
     }
   </style>
 
-  <div id="splash-screen">
-    <div class="splash-content">
-      <h1><span style="filter: drop-shadow(0 0 10px #ff4d4d);"></span>🚀</span>TECH TRENDS <span
-          style="filter: drop-shadow(0 0 10px #f838a2);">📰</span></h1>
-    </div>
-  </div>
+  <h1 id="splash-title">🚀 TECH TRENDS 📰</h1>
 
   <header>
     <nav>
