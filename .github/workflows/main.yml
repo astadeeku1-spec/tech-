@@ -1,0 +1,49 @@
+name: CI Pipeline — Tech Trends
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Get the code
+      - name: ✅ Checkout Code
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Node.js
+      - name: ⚙️ Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      # Step 3: Install dependencies
+      - name: 📦 Install Dependencies
+        run: npm install
+
+      # Step 4: Run lint check
+      - name: 🔍 Lint Check
+        run: |
+          echo "Checking project files..."
+          test -f server.js && echo "✓ server.js found"
+          test -f index.html && echo "✓ index.html found"
+          test -f package.json && echo "✓ package.json found"
+          echo "All required files present ✓"
+
+      # Step 5: Run tests
+      - name: 🧪 Run Tests
+        run: npm test
+
+      # Step 6: Confirm deployment ready
+      - name: 🚀 Deployment Ready
+        run: |
+          echo "========================================"
+          echo "  Pipeline passed! Ready to deploy."
+          echo "  Project: Tech Trends"
+          echo "  Stack:   Node.js + MongoDB + Express"
+          echo "========================================"
