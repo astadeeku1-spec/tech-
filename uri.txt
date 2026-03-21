@@ -1,1 +1,0 @@
-mongodb://ac-sskzygs-shard-00-01.21ouk3y.mongodb.net:27017,ac-sskzygs-shard-00-00.21ouk3y.mongodb.net:27017,ac-sskzygs-shard-00-02.21ouk3y.mongodb.net:27017/?authSource=admin&replicaSet=atlas-oiipca-shard-0
