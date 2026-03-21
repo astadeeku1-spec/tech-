@@ -8,20 +8,20 @@
 
   <style>
     :root {
-      --bg-color: #f4f7f6;
+      --bg-color: rgb(255, 151, 208);
       --text-color: #333;
-      --header-bg: #0a192f;
+      --header-bg: #cb99b4;
       --card-bg: white;
-      --accent-color: #64ffda;
-      --primary-gradient: linear-gradient(135deg, #64ffda 0%, #38bdf8 100%);
+      --accent-color: #480c22;
+      --primary-gradient: linear-gradient(135deg, #5c2a42 0%, #7c2f57 100%);
     }
 
     body.dark {
-      --bg-color: #0b1120;
+      --bg-color: #380606;
       --text-color: #e2e8f0;
-      --header-bg: #020617;
-      --card-bg: #1e293b;
-      --accent-color: #38bdf8;
+      --header-bg: #170202;
+      --card-bg: #6e0101;
+      --accent-color: #0b0404;
     }
 
     body {
@@ -340,12 +340,12 @@
       align-items: center;
       justify-content: center;
       gap: 0.5rem;
-      box-shadow: 0 10px 25px rgba(56, 189, 248, 0.3);
+      box-shadow: 0 10px 25px rgba(149, 50, 66, 0.3);
     }
 
     .btn-submit:hover {
       transform: translateY(-5px);
-      box-shadow: 0 15px 35px rgba(56, 189, 248, 0.5);
+      box-shadow: 0 15px 35px rgba(149, 50, 66, 0.5);
     }
 
     .btn-submit:disabled {
@@ -366,7 +366,7 @@
     .status-msg.success {
       display: block;
       background: rgba(34, 197, 94, 0.1);
-      color: #22c55e;
+      color: #6d1313;
       border: 1px solid rgba(34, 197, 94, 0.2);
     }
 
@@ -467,7 +467,7 @@
   <div id="splash-screen">
     <div class="splash-content">
       <h1><span style="filter: drop-shadow(0 0 10px #ff4d4d);"></span>🚀</span>TECH TRENDS <span
-          style="filter: drop-shadow(0 0 10px #38bdf8);">📰</span></h1>
+          style="filter: drop-shadow(0 0 10px #f838a2);">📰</span></h1>
     </div>
   </div>
 
@@ -646,17 +646,18 @@
     ];
 
     async function fetchNews() {
-      try {
-        // Try local API first
-        let response = await fetch("http://localhost:3000/api/news");
+      const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+      const newsApiUrl = isLocal ? "http://localhost:3000/api/news" : "https://tech-a5k5.onrender.com/api/news";
 
-        // If local API fails (e.g. for global visitors), fallback to the static file
-        if (!response.ok) throw new Error('Local server offline');
+      try {
+        let response = await fetch(newsApiUrl);
+
+        if (!response.ok) throw new Error('API offline');
 
         const data = await response.json();
         renderInfo(data && data.length > 0 ? data : infoData);
       } catch (error) {
-        console.log("Global mode: Fetching static news.json");
+        console.log("Global mode: Fetching static news.json or fallback data");
         try {
           const response = await fetch("news.json");
           const data = await response.json();
@@ -694,7 +695,7 @@
 
     /* Feedback Handling Configuration */
     const LOCAL_API = "http://localhost:3000/api/feedback";
-    const GLOBAL_API = "https://tech-murex-one.vercel.app/api/feedback";
+    const GLOBAL_API = "https://tech-a5k5.onrender.com/api/feedback";
 
     const feedbackForm = document.getElementById('feedbackForm');
     const statusMsg = document.getElementById('statusMsg');
@@ -738,7 +739,7 @@
         if (!isLocal) {
           statusMsg.innerHTML = `
             <div style="font-weight: 700; margin-bottom: 5px;">Global Transmission Pending.</div>
-            <div>Please ensure your Vercel project has the GITHUB_TOKEN environment variable set.</div>
+            <div>Please ensure your Render project has the GITHUB_TOKEN environment variable set.</div>
           `;
         } else {
           statusMsg.innerText = 'Local transmission error: ' + error.message;
