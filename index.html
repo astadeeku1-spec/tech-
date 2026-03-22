@@ -488,13 +488,13 @@
       30% {
         transform: translate(-50%, -50%) scale(3.5);
         opacity: 1;
-        filter: drop-shadow(0 0 10px #f49bbf);
+        filter: drop-shadow(0 0 10px #ebe3e6);
       }
 
       60% {
         transform: translate(-50%, -50%) scale(3.5);
         opacity: 1;
-        filter: drop-shadow(0 0 10px #3a0202);
+        filter: drop-shadow(0 0 10px #ffa9c4);
       }
 
       90% {
@@ -578,7 +578,7 @@
 
   <footer>
     <p>© 2026 <a href="https://astadeeku1-spec.github.io/tech-/"
-        style="color: inherit; text-decoration: none; font-weight: 700;">Daily Tech Trends</a> | Engineered by <a
+        style="color: inherit; text-decoration: none; font-weight: 700;">Tech Trends</a> | Engineered by <a
         href="https://github.com/astadeeku1-spec" style="color: var(--accent-color); text-decoration: none;"
         target="_blank">@astadeeku1-spec</a></p>
   </footer>
@@ -780,7 +780,7 @@
         const result = await response.json();
 
         if (response.ok) {
-          statusMsg.innerText = `Success! Feedback synced to your GitHub Repository! 🛸`;
+          statusMsg.innerText = `Successfully sent your feedback! 🛸`;
           statusMsg.classList.add('success');
           feedbackForm.reset();
         } else {
