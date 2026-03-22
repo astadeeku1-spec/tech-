@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Daily Tech Trends</title>
+  <title>Tech Trends</title>
 
   <style>
     :root {
@@ -430,15 +430,34 @@
     }
 
     @keyframes fadeOverlay {
-      0% { opacity: 1; }
-      80% { opacity: 1; }
-      100% { opacity: 0; visibility: hidden; }
+      0% {
+        opacity: 1;
+      }
+
+      80% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+        visibility: hidden;
+      }
     }
 
     @keyframes fadeHeader {
-      0% { background-color: rgb(40, 10, 10); box-shadow: none; }
-      80% { background-color: black; box-shadow: none; }
-      100% { background-color: var(--header-bg); }
+      0% {
+        background-color: rgb(40, 10, 10);
+        box-shadow: none;
+      }
+
+      80% {
+        background-color: black;
+        box-shadow: none;
+      }
+
+      100% {
+        background-color: var(--header-bg);
+      }
     }
 
     /* The perfectly centered zooming splash title */
@@ -461,16 +480,44 @@
     }
 
     @keyframes perfectCenterSplash {
-      0% { transform: translate(-50%, -50%) scale(2); opacity: 0; }
-      30% { transform: translate(-50%, -50%) scale(3.5); opacity: 1; filter: drop-shadow(0 0 10px #f838a2); }
-      60% { transform: translate(-50%, -50%) scale(3.5); opacity: 1; filter: drop-shadow(0 0 10px #f838a2); }
-      90% { transform: translate(-45vw, -45vh) scale(1); opacity: 0; } /* Flies to the upper LEFT corner! */
-      100% { transform: translate(-45vw, -45vh) scale(1); opacity: 0; visibility: hidden; }
+      0% {
+        transform: translate(-50%, -50%) scale(2);
+        opacity: 0;
+      }
+
+      30% {
+        transform: translate(-50%, -50%) scale(3.5);
+        opacity: 1;
+        filter: drop-shadow(0 0 10px #b61c3d);
+      }
+
+      60% {
+        transform: translate(-50%, -50%) scale(3.5);
+        opacity: 1;
+        filter: drop-shadow(0 0 10px #f838a2);
+      }
+
+      90% {
+        transform: translate(-45vw, -45vh) scale(1);
+        opacity: 0;
+      }
+
+      /* Flies to the upper LEFT corner! */
+      100% {
+        transform: translate(-45vw, -45vh) scale(1);
+        opacity: 0;
+        visibility: hidden;
+      }
     }
 
     @keyframes revealNavText {
-      0% { opacity: 0; }
-      100% { opacity: 1; }
+      0% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+      }
     }
   </style>
 
