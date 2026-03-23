@@ -1,7 +1,10 @@
 const { MongoClient } = require("mongodb");
 const dns = require('dns');
 // Override DNS servers to bypass the local Windows querySrv bug
-dns.setServers(['8.8.8.8', '8.8.4.4']);
+// Only apply this when NOT in production to prevent breaking Render's internal DNS routing!
+if (process.env.NODE_ENV !== 'production') {
+    dns.setServers(['8.8.8.8', '8.8.4.4']);
+}
 
 const uri = process.env.MONGO_URI;
 
