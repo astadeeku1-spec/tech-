@@ -282,7 +282,7 @@ section {
 
 footer {
   background: var(--header-bg);
-  color: white;
+  color: rgb(199, 159, 159);
   text-align: center;
   padding: 3rem;
   margin-top: 5rem;
