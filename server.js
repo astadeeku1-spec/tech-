@@ -120,11 +120,10 @@ app.post('/api/feedback', async (req, res) => {
     }
 });
 
-// START SERVER
-initDb().then(() => {
-    app.listen(PORT, () => {
-        console.log(`🚀 Server running at http://localhost:${PORT}`);
-    });
-}).catch(err => {
-    console.error("failed to start server:", err);
+// START SERVER IMMEDIATELY
+app.listen(PORT, () => {
+    console.log(`🚀 Server running at http://localhost:${PORT}`);
 });
+
+// Initialize database in the background
+initDb().catch(err => console.error("Failed to initialize database:", err));
